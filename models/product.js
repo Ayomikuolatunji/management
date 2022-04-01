@@ -27,7 +27,7 @@ class Product{
         console.log(data)
       })
       .catch(err=>{
-
+          throw err
       })
   }
 }
