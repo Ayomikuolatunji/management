@@ -19,13 +19,19 @@ class User{
             console.log("error")
       })
   }
-   static addToCart(product){
+   addToCart(product){
      const db=getDb()
       // const cartProducts=this.cart.findIndex(item=>{
       //     return item._id===prodId
       // })
       const cartProduct={items:[{...product,qantity:1}]}
      return db.collection('users').updateOne({_id:new mongodb.ObjectId(id)},{$set:{cart:cartProduct}})
+     .then(data=>{
+        return data
+     })
+     .catch(err=>{
+       console.log(err)
+     })
    }
    static findById(userId){
       const db=getDb()
