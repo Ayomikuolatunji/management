@@ -1,20 +1,24 @@
-const {getDb}=requre("../util/database.js")
+const {getDb}=require("../util/database.js")
 
 
 class Product{
   constructor(title,price,description,imageUrl ){
-     this.title=this.title,
+     this.title=title,
      this.price=price,
-     this.description=this.description,
-     this.imageUrl=this.imageUrl
+     this.description=description,
+     this.imageUrl=imageUrl
   }
-  save(){
-     const db=getDb()
-     db.connection('products').RecordsDB.insertOne({
-        this
-     }).then(()=>{
-         
-     })   
+  save() {
+    const db = getDb();
+    return db
+      .collection('products')
+      .insertOne(this)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 }
 
