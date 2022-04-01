@@ -20,6 +20,16 @@ class Product{
         console.log(err);
       });
   }
+  fetchAll(){
+      const db=getDb();
+      return db.collection.find()
+      .then(data=>{
+        console.log(data)
+      })
+      .catch(err=>{
+
+      })
+  }
 }
 
 
