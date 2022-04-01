@@ -1,8 +1,13 @@
-const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('node-sql', 'root', 'ayoscript222', {
-  dialect: 'mysql',
-  host: 'localhost'
-});
+const { MongoClient, } = require('mongodb');
+const uri = "mongodb+srv://udemy-learn:ayomiku123@cluster0.xcjno.mongodb.net/udemyFirstDatabase?retryWrites=true&w=majority";
 
-module.exports = sequelize;
+
+MongoClient.connect(uri).then(data=>{
+  console.log("connected")
+})
+.catch(err=>{
+  console.log("failed")
+})
+
+
