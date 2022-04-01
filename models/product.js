@@ -1,5 +1,5 @@
 const {getDb}=require("../util/database.js")
-
+const mongodb=require("mongodb")
 
 class Product{
   constructor(title,price,description,imageUrl ){
@@ -14,7 +14,7 @@ class Product{
       .collection('products')
       .insertOne(this)
       .then(result => {
-        console.log(result);
+        console.log("data");
       })
       .catch(err => {
         console.log(err);
@@ -27,7 +27,6 @@ class Product{
       .find()
       .toArray()
       .then(data=>{
-        console.log(data)
         return data
       })
       .catch(err=>{
@@ -37,15 +36,15 @@ class Product{
   static findById(prodId){
      const db=getDb()
      return db.collection("products")
-     .find({_id:prodId})
+     .find({_id:new mongodb.ObjectId(prodId)})
      .next()
      .then(data=>{
-      console.log(data)
-      return data
+        console.log(data)
+        return data
       })
       .catch(err=>{
           console.log(err)
-      })
+      }) 
   }
 }
 
