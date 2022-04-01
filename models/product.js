@@ -2,23 +2,30 @@ const {getDb}=require("../util/database.js")
 const mongodb=require("mongodb")
 
 class Product{
-  constructor(title,price,description,imageUrl ){
+  constructor(title,price,description,imageUrl,id){
      this.title=title,
      this.price=price,
      this.description=description,
-     this.imageUrl=imageUrl
+     this.imageUrl=imageUrl,
+     this._id=new mongodb.ObjectId(id)
   }
   save() {
     const db = getDb();
-    return db
-      .collection('products')
-      .insertOne(this)
-      .then(result => {
+    let sendReqeuest;
+    if(this._id){
+       sendReqeuest=db.collection("products").updateOne({_id:this._id},{$set: this})
+    }else{
+       sendReqeuest=db  
+       .collection('products')
+       .insertOne(this)
+    }
+    return sendReqeuest.
+    then(result => {
         console.log("data");
       })
       .catch(err => {
         console.log(err);
-      });
+    });
   }
   static fetchAll(){
       const db = getDb();
@@ -45,6 +52,17 @@ class Product{
       .catch(err=>{
           console.log(err)
       }) 
+  }
+  static deleteById(prodId){
+    const db=getDb()
+        return db.collection("products")
+        .deleteOne({_id:new mongodb.ObjectId(prodId)})
+        .then(data=>{
+          return data
+        })
+        .catch(err=>{
+          console.log(err)
+        })
   }
 }
 
