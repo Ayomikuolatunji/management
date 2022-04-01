@@ -33,7 +33,20 @@ class Product{
       .catch(err=>{
           console.log(err)
       })
-  } 
+  } o
+  static findById(prodId){
+     const db=getDb()
+     return db.collection("products")
+     .find({_id:prodId})
+     .next()
+     .then(data=>{
+      console.log(data)
+      return data
+      })
+      .catch(err=>{
+          console.log(err)
+      })
+  }
 }
 
 
