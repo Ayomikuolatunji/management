@@ -1,5 +1,5 @@
 const { getDb } = require("../util/database");
-const {ObjecId}=require("mongodb")
+const {ObjectId}=require("mongodb")
 
 class User{
   constructor(name){
@@ -21,6 +21,6 @@ class User{
   findById(userId){
       const db=getDb()
       return db.collection("users")
-      .findOne({_id:new ObjecId(userId)})
+      .findOne({_id:new ObjectId(userId)})
   }
 }
