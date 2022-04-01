@@ -72,8 +72,7 @@ exports.postAddProduct = (req, res, next) => {
 // };
 
 exports.getProducts = (req, res, next) => {
-  const product=new Product()
-    product.fetchAll()
+    Product.fetchAll()
     .then(products => {
       res.render('admin/products', {
         prods: products,

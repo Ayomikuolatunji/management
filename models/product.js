@@ -21,10 +21,11 @@ class Product{
       });
   }
   fetchAll(){
-      const db=getDb();
-      return db.collection.find()
+      const db = getDb();
+      return db.collection.find().toArray()
       .then(data=>{
         console.log(data)
+        return data
       })
       .catch(err=>{
           throw err
