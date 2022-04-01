@@ -20,17 +20,20 @@ class Product{
         console.log(err);
       });
   }
-  fetchAll(){
+  static fetchAll(){
       const db = getDb();
-      return db.collection.find().toArray()
+      return db
+      .collection("products")
+      .find()
+      .toArray()
       .then(data=>{
         console.log(data)
         return data
       })
       .catch(err=>{
-          throw err
+          console.log(err)
       })
-  }
+  } 
 }
 
 
