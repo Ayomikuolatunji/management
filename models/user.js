@@ -12,18 +12,20 @@ class User{
       return db.collection("users").insertOne(this)
       .then(data=>{
          console.log(data)
+         return data
       })
       .catch(err=>{
             console.log("error")
       })
   }
 
-  findById(userId){
+   static findById(userId){
       const db=getDb()
       return db.collection("users")
       .findOne({_id:new ObjectId(userId)})
       .then(data=>{
-        console.log("")
+        console.log("created for user")
+        return data
       })
   }
 }
