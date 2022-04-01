@@ -1,5 +1,5 @@
-const { Db } = require("mongodb");
 const { getDb } = require("../util/database");
+const {ObjecId}=require("mongodb")
 
 class User{
   constructor(name){
@@ -8,16 +8,19 @@ class User{
   }
 
   static save(){
-      return Db.collection("user").insertOne(this)
+    const db=getDb
+      return db.collection("users").insertOne(this)
       .then(data=>{
          console.log(data)
       })
       .catch(err=>{
-
+            console.log("error")
       })
   }
 
   findById(userId){
-
+      const db=getDb()
+      return db.collection("users")
+      .findOne({_id:new ObjecId(userId)})
   }
 }
