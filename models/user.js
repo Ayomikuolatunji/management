@@ -22,7 +22,6 @@ class User{
    addToCart(product){
      if(this.cart.hasOwnProperty("items")){
       const cartProductIndex = this.cart.items.findIndex(cp => {
-        console.log(cp.productId.toString(), "and", product._id.toString())
         return cp.productId.toString() === product._id.toString();
       });
       let newQuantity = 1;
