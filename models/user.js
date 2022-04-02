@@ -34,8 +34,7 @@ class User{
     // check if the product index is greater than zero
     if(cartProductIndex >=0){
       //  update the quantity
-        newQuantity=this.cart.items[cartProductIndex].qantity+1;
-
+        newQuantity=this.cart.items[cartProductIndex].qantity+1;  
         updatedcartItems[cartProductIndex]=newQuantity
     }else{
       updatedcartItems.push({productId:new mongodb.ObjectId(product._id),qantity:1})
