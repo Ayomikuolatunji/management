@@ -25,7 +25,7 @@ class User{
       // const cartProducts=this.cart.findIndex(item=>{
       //     return item._id===prodId
       // })
-     const cartProduct={items:[{...product,qantity:1}]}
+     const cartProduct={items:[{productId:new mongodb.ObjectId(product._id),qantity:1}]}
      return db.collection('users').updateOne({_id:new mongodb.ObjectId(this._id)},{$set:{cart:cartProduct}})
      .then(data=>{
         return data
