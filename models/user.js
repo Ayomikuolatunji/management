@@ -13,7 +13,6 @@ class User{
     const db=getDb
       return db.collection("users").insertOne(this)
       .then(data=>{
-         console.log(data)
          return data
       })
       .catch(err=>{
@@ -21,32 +20,37 @@ class User{
       })
   }
    addToCart(product){
-    //  connect to the database
-    const db=getDb()
-    // check if cart item is already in the database
-    const cartProductIndex=this.cart.items.findIndex(item=>{
-          return item.productId===product._id
-    })
-    // set quantity valriable to one
-    let newQuantity=1;
-    // update spread all the elements in the cart items
-    const updatedcartItems=[...this.cart.items]
-    // check if the product index is greater than zero
-    if(cartProductIndex >=0){
-      //  update the quantity
-        newQuantity=this.cart.items[cartProductIndex].qantity+1;  
-        updatedcartItems[cartProductIndex]=newQuantity
-    }else{
-      updatedcartItems.push({productId:new mongodb.ObjectId(product._id),qantity:1})
-    }
-     const cartProduct={items:[updatedcartItems ]}
-     return db.collection('users').updateOne({_id:new mongodb.ObjectId(this._id)},{$set:{cart:cartProduct}})
-     .then(data=>{
-        return data
-     })
-     .catch(err=>{
-       console.log(err)
-     })
+     if(this.cart.hasOwnProperty("items")){
+      const cartProductIndex = this.cart.items.findIndex(cp => {
+        console.log(cp.productId.toString(), "and", product._id.toString())
+        return cp.productId.toString() === product._id.toString();
+      });
+      let newQuantity = 1;
+      const updatedCartItems = [...this.cart.items];
+  
+      if (cartProductIndex >= 0) {
+        newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+        updatedCartItems[cartProductIndex].quantity = newQuantity;
+      } else {
+        updatedCartItems.push({
+          productId: new mongodb.ObjectId(product._id),
+          quantity: newQuantity
+        });
+      }
+      const updatedCart = {
+        items: updatedCartItems
+      };
+      const db = getDb();
+      return db
+        .collection('users')
+        .updateOne(
+          { _id: new mongodb.ObjectId(this._id) },
+          { $set: { cart: updatedCart } }
+        );
+     }else{
+       console.log("does not exits")
+     }
+   
    }
    static findById(userId){
       const db=getDb()
